@@ -5,7 +5,9 @@
     <li>
       Title: <%= link.title %>
       URL:   <%= link.url   %>
-      Tag: <%= link.tags.first.name %>
+      <% alltags = [] %>
+      <% link.tags.each { |x| alltags << x.name } %>
+      Tag: <%= alltags.join(' ') %>
     </li>
   <% end %>
 </ul>
