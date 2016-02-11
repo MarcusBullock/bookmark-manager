@@ -8,6 +8,7 @@ require_relative 'data_mapper_setup'
 class Bookmark < Sinatra::Base
 
   enable :sessions
+  set :session_secret, 'super secret'
 
   helpers do
     def current_user
@@ -49,13 +50,9 @@ class Bookmark < Sinatra::Base
   end
 
   post '/newuser' do
-    user = User.create(username: params[:username], email: params[:email], password: params[:password])
+    user = User.create(username: params[:username], email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
     session[:user_id] = user.id
-    redirect '/welcome'
-  end
-
-  get '/welcome' do
-    erb(:'links/welcome')
+    redirect '/links'
   end
 
   # start the server if ruby file executed directly
