@@ -23,7 +23,7 @@ feature 'Adding tags to links' do
     expect(page).to have_content 'Title: BBC News'
   end
 
-  scenario '-> it adds to the database when adding new links' do 
+  scenario '-> it adds to the database when adding new links' do
     visit('/links/new')
     fill_in('title', with: 'BBC News')
     fill_in('url', with: 'www.bbc.co.uk')

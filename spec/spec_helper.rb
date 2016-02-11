@@ -10,6 +10,7 @@ require 'rspec'
 require './app/models/link'
 require './app/app'
 require 'database_cleaner'
+require 'web_helpers'
 
 Capybara.app = Bookmark
 
