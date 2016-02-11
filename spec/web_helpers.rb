@@ -1,7 +1,7 @@
 def sign_up(username: 'marcus', email: 'marcusbullock@hotmail.co.uk',
               password: 'password',
               password_confirmation: 'password')
-  visit('/register')
+  visit('/users/new')
   fill_in :username, with: username
   fill_in :email, with: email
   fill_in :password, with: password

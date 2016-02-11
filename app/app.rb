@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require_relative 'models/link'
+require 'sinatra/flash'
 
 ENV['RACK_ENV'] ||= 'development'
 
@@ -9,6 +9,7 @@ class Bookmark < Sinatra::Base
 
   enable :sessions
   set :session_secret, 'super secret'
+  register Sinatra::Flash
 
   helpers do
     def current_user
@@ -45,14 +46,20 @@ class Bookmark < Sinatra::Base
     erb :'links/index'
   end
 
-  get '/register' do
-    erb :'links/register'
+  get '/users/new' do
+    @user = User.new
+    erb :'users/new'
   end
 
-  post '/newuser' do
-    user = User.create(username: params[:username], email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
-    session[:user_id] = user.id
-    redirect '/links'
+  post '/users' do
+    @user = User.new(username: params[:username], email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation])
+    if @user.save
+      session[:user_id] = @user.id
+      redirect '/links'
+    else
+      flash.now[:message] = "Passwords do not match."
+      erb :'users/new'
+    end
   end
 
   # start the server if ruby file executed directly
